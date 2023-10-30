@@ -3,8 +3,15 @@
 OmniDriveROS::OmniDriveROS()
 	: Node("omnidrive_node")
 {
-	cmd_vel_sub_ = this->create_subscription<geometry_msgs::msg::TwistStamped>(
+	com_.setName( "RobotinoNode" );
+	com_.setAddress("127.0.1.1");
+
+	cmd_vel_sub_ = this->create_subscription<geometry_msgs::msg::Twist>(
 		"cmd_vel", 1, std::bind(&OmniDriveROS::cmdVelCallback, this, std::placeholders::_1));
+
+	this->setComId( com_.id() );
+	com_.connectToServer( false );
+	setMaxMin(1, 0.01, 1, 0.01);
 }
 
 OmniDriveROS::~OmniDriveROS()
@@ -12,11 +19,11 @@ OmniDriveROS::~OmniDriveROS()
 	
 }
 
-void OmniDriveROS::cmdVelCallback(const geometry_msgs::msg::TwistStamped::SharedPtr msg)
+void OmniDriveROS::cmdVelCallback(const geometry_msgs::msg::Twist::SharedPtr msg)
 {
-	double linear_x = msg->twist.linear.x;
-	double linear_y = msg->twist.linear.y;
-	double angular = msg->twist.angular.z;
+	double linear_x = msg->linear.x;
+	double linear_y = msg->linear.y;
+	double angular = msg->angular.z;
 
 	if ( fabs( linear_x ) > max_linear_vel_ )
 	{
@@ -64,6 +71,7 @@ void OmniDriveROS::cmdVelCallback(const geometry_msgs::msg::TwistStamped::Shared
 	}
 
 	setVelocity( linear_x, linear_y, angular);
+	com_.processEvents();
 }
 
 void OmniDriveROS::setMaxMin( double max_linear_vel, double min_linear_vel, double max_angular_vel, double min_angular_vel )

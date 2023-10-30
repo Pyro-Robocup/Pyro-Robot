@@ -1,9 +1,3 @@
-/*
- * ComROS.cpp
- *
- *  Created on: 07.12.2011
- *      Author: indorewala@servicerobotics.eu
- */
 #include "robotino_node/ComROS.h"
 #include <sstream>
 
