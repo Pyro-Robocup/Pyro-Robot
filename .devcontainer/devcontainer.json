@@ -20,7 +20,10 @@
 		}
 	},
 	"workspaceMount": "source=${localWorkspaceFolder},target=/home/robocup_ws/src,type=bind",
-	"workspaceFolder": "/home/robocup_ws"
+	"workspaceFolder": "/home/robocup_ws",
+	"runArgs": [
+		"--network=host"
+	]
 
 	// Features to add to the dev container. More info: https://containers.dev/features.
 	// "features": {},
