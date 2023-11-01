@@ -1,37 +1,44 @@
 #include "robotino_node/ComROS.h"
-#include <sstream>
 
 ComROS::ComROS()
+	: thread_(&ComROS::processCallback, this)
 {
 }
 
 ComROS::~ComROS()
 {
+	if (thread_.joinable()) 
+	{
+		thread_.join();
+	}
 }
 
-void ComROS::setName( const std::string& name )
+void ComROS::init(const std::string& name,  const std::string& address)
 {
 	name_ = name;
+	this->setAddress(address.c_str());
+	this->connectToServer(false);
+}
+
+void ComROS::processCallback()
+{
+	std::lock_guard<std::mutex> lock(mutex_);
+	this->processEvents();
+	std::this_thread::sleep_for(std::chrono::milliseconds(10));
+	// RCLCPP_INFO(rclcpp::get_logger(name_), "callback for processing occured");
 }
 
 void ComROS::errorEvent( const char* errorString )
 {
-	std::ostringstream os;
-	os << name_ << " : " << errorString;
-
-	ROS_ERROR("%s", os.str().c_str() );
+	RCLCPP_ERROR(rclcpp::get_logger(name_), errorString);
 }
 
 void ComROS::connectedEvent()
 {
-	std::ostringstream os;
-	os << name_ << " connected to Robotino.";
-	ROS_INFO("%s", os.str().c_str() );
+	RCLCPP_INFO(rclcpp::get_logger(name_), "connected to Robotino");
 }
 
 void ComROS::connectionClosedEvent()
 {
-	std::ostringstream os;
-	os << name_ << " disconnected from Robotino.";
-	ROS_INFO("%s", os.str().c_str() );
+	RCLCPP_INFO(rclcpp::get_logger(name_), "disconnected from Robotino");
 }

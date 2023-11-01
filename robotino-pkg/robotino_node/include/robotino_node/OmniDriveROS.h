@@ -1,10 +1,10 @@
 #pragma once
 
 #include "rec/robotino/api2/OmniDrive.h"
-#include "rec/robotino/api2/Com.h"
 
 #include "rclcpp/rclcpp.hpp"
 #include "geometry_msgs/msg/twist.hpp"
+#include "robotino_node/ComROS.h"
 
 class OmniDriveROS: public rec::robotino::api2::OmniDrive, public rclcpp::Node
 {
@@ -13,7 +13,8 @@ public:
 	~OmniDriveROS();
 
 private:
-	rec::robotino::api2::Com com_;
+	ComROS com_;
+
 	rclcpp::Subscription<geometry_msgs::msg::Twist>::SharedPtr cmd_vel_sub_;
 	
 	double max_linear_vel_;
