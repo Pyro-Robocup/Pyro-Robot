@@ -25,7 +25,7 @@ void ComROS::processCallback()
 	std::lock_guard<std::mutex> lock(mutex_);
 	this->processEvents();
 	std::this_thread::sleep_for(std::chrono::milliseconds(10));
-	// RCLCPP_INFO(rclcpp::get_logger(name_), "callback for processing occured");
+	RCLCPP_INFO(rclcpp::get_logger(name_), "callback for processing occured");
 }
 
 void ComROS::errorEvent( const char* errorString )
