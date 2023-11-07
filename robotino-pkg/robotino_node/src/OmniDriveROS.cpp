@@ -6,7 +6,6 @@ OmniDriveROS::OmniDriveROS()
 	cmd_vel_sub_ = this->create_subscription<geometry_msgs::msg::Twist>(
 		"cmd_vel", 1, std::bind(&OmniDriveROS::cmdVelCallback, this, std::placeholders::_1));
 
-	com_.init("omnidrive_node", "127.0.1.1");
 	setMaxMin(1, 0.01, 1, 0.01);
 }
 
@@ -80,12 +79,12 @@ void OmniDriveROS::setMaxMin( double max_linear_vel, double min_linear_vel, doub
 
 int main(int argc, char** argv)
 {
-  rclcpp::init(argc, argv);
-  
-  auto node = std::make_shared<OmniDriveROS>();
+	rclcpp::init(argc, argv);
 
-  rclcpp::spin(node);
+	auto node = std::make_shared<OmniDriveROS>();
 
-  rclcpp::shutdown();
-  return 0;
+	rclcpp::spin(node);
+
+	rclcpp::shutdown();
+	return 0;
 }

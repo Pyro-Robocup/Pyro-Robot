@@ -3,22 +3,21 @@
 #include "rec/robotino/api2/Com.h"
 
 #include <rclcpp/rclcpp.hpp>
-#include <string>
-#include <thread>
 #include <chrono>
+#include <functional>
+#include <memory>
+#include <string>
 
-class ComROS: public rec::robotino::api2::Com
+class ComROS: public rec::robotino::api2::Com, public rclcpp::Node
 {
 public:
 	ComROS();
 	~ComROS();
 
-	void init(const std::string& name,  const std::string& address);
+	void init(const std::string& address);
 
 private:
-	std::string name_;
-	std::thread thread_;
-	std::mutex mutex_;
+	rclcpp::TimerBase::SharedPtr timer_;
 
 	void processCallback();
 

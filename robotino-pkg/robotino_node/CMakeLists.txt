@@ -17,18 +17,28 @@ find_package(RobotinoAPI2)
 include_directories(include)
 
 add_executable(omnidrive_node
-  src/ComROS.cpp
   src/OmniDriveROS.cpp)
+
+add_executable(com_node
+  src/ComROS.cpp)
 
 target_link_libraries(
   omnidrive_node
   ${REC_ROBOTINO_API2_LIBRARY}
 )
 
+target_link_libraries(
+  com_node
+  ${REC_ROBOTINO_API2_LIBRARY}
+)
+
 ament_target_dependencies(omnidrive_node rclcpp geometry_msgs)
+ament_target_dependencies(com_node rclcpp)
+
 
 install(TARGETS
   omnidrive_node
+  com_node
   DESTINATION lib/${PROJECT_NAME})
 
 ament_package()

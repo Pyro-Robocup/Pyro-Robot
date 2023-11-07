@@ -13,8 +13,6 @@ public:
 	~OmniDriveROS();
 
 private:
-	ComROS com_;
-
 	rclcpp::Subscription<geometry_msgs::msg::Twist>::SharedPtr cmd_vel_sub_;
 	
 	double max_linear_vel_;
