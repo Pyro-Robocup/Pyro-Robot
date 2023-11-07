@@ -1,6 +1,7 @@
 #pragma once
 
 #include "rec/robotino/api2/OmniDrive.h"
+#include "rec/robotino/api2/ComId.h"
 
 #include "rclcpp/rclcpp.hpp"
 #include "geometry_msgs/msg/twist.hpp"
