@@ -1,4 +1,4 @@
-#include "robotino_node/OmniDriveROS.h"
+#include "robotino_hardware/OmniDriveROS.h"
 
 OmniDriveROS::OmniDriveROS()
 	: Node("omnidrive_node")
