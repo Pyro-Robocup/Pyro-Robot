@@ -5,7 +5,7 @@ using namespace std::chrono_literals;
 ComROS::ComROS()
 	: Node("com_node")
 {
-	timer_ = this->create_wall_timer(500ms, std::bind(&ComROS::processCallback, this));
+	timer_ = this->create_wall_timer(10ms, std::bind(&ComROS::processCallback, this));
 	init("127.0.1.1");
 }
 
