@@ -6,7 +6,7 @@ OmniDriveROS::OmniDriveROS()
 	cmd_vel_sub_ = this->create_subscription<geometry_msgs::msg::Twist>(
 		"cmd_vel", 1, std::bind(&OmniDriveROS::cmdVelCallback, this, std::placeholders::_1));
 
-	com_.init("omnidrive_node", "127.0.0.1");
+	com_.init("omnidrive_node", "127.0.1.1");
 	setMaxMin(1, 0.01, 1, 0.01);
 }
 

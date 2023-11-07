@@ -1,7 +1,7 @@
 #include "robotino_node/ComROS.h"
+#include <iostream>
 
 ComROS::ComROS()
-	: thread_(&ComROS::processCallback, this)
 {
 }
 
@@ -18,13 +18,14 @@ void ComROS::init(const std::string& name,  const std::string& address)
 	name_ = name;
 	this->setAddress(address.c_str());
 	this->connectToServer(false);
+	thread_ = std::thread(&ComROS::processCallback, this);
 }
 
 void ComROS::processCallback()
 {
-	std::lock_guard<std::mutex> lock(mutex_);
 	this->processEvents();
 	std::this_thread::sleep_for(std::chrono::milliseconds(10));
+	std::cout << "looped" << std::endl;
 	RCLCPP_INFO(rclcpp::get_logger(name_), "callback for processing occured");
 }
 
