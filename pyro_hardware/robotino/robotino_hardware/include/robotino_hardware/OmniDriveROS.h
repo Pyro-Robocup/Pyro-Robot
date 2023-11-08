@@ -5,7 +5,6 @@
 
 #include "rclcpp/rclcpp.hpp"
 #include "geometry_msgs/msg/twist.hpp"
-#include "robotino_hardware/ComROS.h"
 
 class OmniDriveROS: public rec::robotino::api2::OmniDrive, public rclcpp::Node
 {
