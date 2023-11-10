@@ -1,4 +1,5 @@
 #include "robotino_hardware/ComROS.h"
+#include <iostream>
 
 using namespace std::chrono_literals;
 
@@ -23,6 +24,7 @@ void ComROS::init(const std::string& address)
 void ComROS::processCallback()
 {
 	this->processEvents();
+	std::cout << this->id() << std::endl;
 	std::this_thread::sleep_for(std::chrono::milliseconds(10));
 	RCLCPP_INFO(this->get_logger(), "callback for processing occured");
 }

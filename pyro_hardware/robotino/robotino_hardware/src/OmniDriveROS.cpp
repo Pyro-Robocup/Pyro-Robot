@@ -7,7 +7,10 @@ OmniDriveROS::OmniDriveROS()
 		"cmd_vel", 1, std::bind(&OmniDriveROS::cmdVelCallback, this, std::placeholders::_1));
 
 	setMaxMin(1, 0.01, 1, 0.01);
-	this->setComId(rec::robotino::api2::ComId());
+	
+	this->setAddress("127.0.1.1");
+	this->connectToServer(false);
+	this->setComId(this->id());
 }
 
 OmniDriveROS::~OmniDriveROS()
